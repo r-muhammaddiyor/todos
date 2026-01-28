@@ -149,14 +149,14 @@
         onclick="document.getElementById('editModal').close()"
         class="absolute top-4 right-4 text-2xl hover:text-gray-600"
       >
-        ❎
+        x
       </button>
 
       <h3 class="text-lg font-bold">Ma'lumot kiritish</h3>
       <p class="py-4">Iltimos pasdagilarni to'ldiring</p>
 
-      <form class="flex flex-col gap-2" id="editForm">
-        <select name="status" class="select appearance-none w-full">
+      <form class="flex flex-col gap-4" id="form">
+        <select name="status" class="select appearance-none w-full" required>
           <option value="active">Active</option>
           <option value="archived">Archived</option>
           <option value="rejected">Rejected</option>
@@ -164,12 +164,23 @@
           <option value="pending">Pending</option>
         </select>
         <div>
-          <input type="text" class="input w-full" name="text" placeholder="Sarlavha yozing..." />
+          <input
+            required
+            type="text"
+            class="input w-full"
+            name="text"
+            placeholder="Sarlavha yozing..."
+          />
         </div>
-        <textarea class="input w-full" name="title" placeholder="Izoh yozing..."></textarea>
+        <textarea
+          required
+          class="input w-full"
+          name="title"
+          placeholder="Izoh yozing..."
+        ></textarea>
         <div class="flex justify-between mx-10 gap-5">
           <button type="reset" class="btn">Bekor qilish</button>
-          <button type="submit" class="btn">Tasdiqlash</button>
+          <button type="submit" class="btn js-submitBtn">Tasdiqlash</button>
         </div>
       </form>
     </dialog>
