@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List</title>
+    <link rel="stylesheet" href="css/output.css" />
+  </head>
+
+  <body class="min-h-screen flex flex-col">
+    <!-- Loader -->
+    <div id="loader" class="none fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+      <span class="loader"></span>
+    </div>
+
+    <!-- Top bar -->
+    <header class="border-b shadow-sm">
+      <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <h1 class="text-lg font-semibold 0">My Todos</h1>
+        </div>
+
+        <a class="js-add-button btn btn-info px-4 rounded-xl" href="./pages/add/index.html">
+          + New
+        </a>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <main class="flex-1">
+      <div id="toastContainer" class="toast toast-top toast-start z-50"></div>
+
+      <ul id="todosContainer" class="flex flex-col max-w-225 mx-auto pt-10 p-5 gap-5"></ul>
+    </main>
+
+    <!-- Card template -->
+    <template id="cardTemplate">
+      <li
+        class="rounded-xl border p-4 flex items-center justify-between hover:shadow-sm transition"
+      >
+        <div>
+          <p class="js-status inline-flex items-center gap-2 mb-3 text-xs font-medium">
+            <span class="w-2 h-2 rounded-full"></span>
+            status
+          </p>
+
+          <h3 class="js-title text-base font-semibold mb-1">Todo title</h3>
+
+          <p class="js-text text-sm leading-relaxed">Todo description goes here</p>
+        </div>
+
+        <div class="flex gap-2 mt-4 pt-3">
+          <button class="js-edit btn btn-info flex-1 text-sm py-1.5 rounded-lg">
+            <svg
+              width="15"
+              height="15"
+              viewBox="0 0 15 15"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M11.8536 1.14645C11.6583 0.951184 11.3417 0.951184 11.1465 1.14645L3.71455 8.57836C3.62459 8.66832 3.55263 8.77461 3.50251 8.89155L2.04044 12.303C1.9599 12.491 2.00189 12.709 2.14646 12.8536C2.29103 12.9981 2.50905 13.0401 2.69697 12.9596L6.10847 11.4975C6.2254 11.4474 6.3317 11.3754 6.42166 11.2855L13.8536 3.85355C14.0488 3.65829 14.0488 3.34171 13.8536 3.14645L11.8536 1.14645ZM4.42166 9.28547L11.5 2.20711L12.7929 3.5L5.71455 10.5784L4.21924 11.2192L3.78081 10.7808L4.42166 9.28547Z"
+                fill="currentColor"
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </button>
+          <button class="js-delete btn btn-error flex-1 text-sm py-1.5 rounded-lg transition">
+            <svg
+              width="15"
+              height="15"
+              viewBox="0 0 15 15"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M5.5 1C5.22386 1 5 1.22386 5 1.5C5 1.77614 5.22386 2 5.5 2H9.5C9.77614 2 10 1.77614 10 1.5C10 1.22386 9.77614 1 9.5 1H5.5ZM3 3.5C3 3.22386 3.22386 3 3.5 3H5H10H11.5C11.7761 3 12 3.22386 12 3.5C12 3.77614 11.7761 4 11.5 4H11V12C11 12.5523 10.5523 13 10 13H5C4.44772 13 4 12.5523 4 12V4L3.5 4C3.22386 4 3 3.77614 3 3.5ZM5 4H10V12H5V4Z"
+                fill="currentColor"
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </li>
+    </template>
+
+    <!-- modal -->
+
+    <dialog id="editModal">
+      <button
+        type="button"
+        onclick="document.getElementById('editModal').close()"
+        class="absolute top-4 right-4 text-2xl hover:text-gray-600"
+      >
+        ❎
+      </button>
+
+      <h3 class="text-lg font-bold">Ma'lumot kiritish</h3>
+      <p class="py-4">Iltimos pasdagilarni to'ldiring</p>
+
+      <form class="flex flex-col gap-2" id="editForm">
+        <select name="status" class="select appearance-none w-full">
+          <option value="active">Active</option>
+          <option value="archived">Archived</option>
+          <option value="rejected">Rejected</option>
+          <option value="completed">Completed</option>
+          <option value="pending">Pending</option>
+        </select>
+        <div>
+          <input type="text" class="input w-full" name="text" placeholder="Sarlavha yozing..." />
+        </div>
+        <textarea class="input w-full" name="title" placeholder="Izoh yozing..."></textarea>
+        <div class="flex justify-between mx-10 gap-5">
+          <button type="reset" class="btn">Bekor qilish</button>
+          <button type="submit" class="btn">Tasdiqlash</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- tost -->
+
+    <template id="toastTemplate">
+      <div role="alert" class="alert alert-error shadow-lg animate-slide-in">
+        <span></span>
+      </div>
+    </template>
+
+    <template id="successTemplate">
+      <div role="alert" class="alert alert-success shadow-lg animate-slide-in">
+        <span>Muvaffaqiyatli qo‘shildi</span>
+      </div>
+    </template>
+
+    <script type="module" src="./js/app.js"></script>
+    <script type="module" src="./js/add.js"></script>
+  </body>
+</html>

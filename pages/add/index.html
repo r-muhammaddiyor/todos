@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add</title>
+    <link rel="stylesheet" href="/css/output.css" />
+  </head>
+  <body class="flex justify-center items-center mt-50">
+    <div
+      class="flex flex-col justify-center items-center w-100 h-100 border shadow-2xl rounded-2xl text-center"
+    >
+      <h3 class="text-lg font-bold">Ma'lumot kiritish</h3>
+      <p class="py-4">Iltimos pasdagilarni to'ldiring</p>
+      <form class="flex flex-col gap-4" id="form">
+        <select name="status" class="select appearance-none w-full" required>
+          <option value="active">Active</option>
+          <option value="archived">Archived</option>
+          <option value="rejected">Rejected</option>
+          <option value="completed">Completed</option>
+          <option value="pending">Pending</option>
+        </select>
+        <div>
+          <input
+            required
+            type="text"
+            class="input w-full"
+            name="text"
+            placeholder="Sarlavha yozing..."
+          />
+        </div>
+        <textarea
+          required
+          class="input w-full"
+          name="title"
+          placeholder="Izoh yozing..."
+        ></textarea>
+        <div class="flex justify-between mx-10 gap-5">
+          <button type="reset" class="btn">Bekor qilish</button>
+          <button type="submit" class="btn js-submitBtn">Tasdiqlash</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Toast
+
+    <template id="toastTemplate">
+      <div role="alert" class="alert alert-info">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          class="h-6 w-6 shrink-0 stroke-current"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          ></path>
+        </svg>
+        <span>New software update available.</span>
+      </div>
+    </template>
+    <div id="toast" class="fixed top-5 right-5 flex flex-col gap-3"></div> -->
+
+    <script type="module" src="./add.js"></script>
+  </body>
+</html>
